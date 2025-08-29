@@ -23,9 +23,6 @@ function setTetheringControl(value) {
     }
 }
 
-export function createSoundProfile(profileName) {
-
-}
 
 function buildParamXML(param, value) {
     return '<parm name="' + param + '" value="' + value + '"/>';
