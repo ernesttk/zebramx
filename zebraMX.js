@@ -1,16 +1,16 @@
 #!/usr/bin/env js
 
-export const version = function getMxVersion() {
+exports.version = function getMxVersion() {
    var versionQuery = '<parm-query name="Version"/>';
    var response = sendCommand(versionQuery, "MX");
    return response..parm.@value;
 }
 
-export function disableTetheringControl() {
+exports.disableTetheringControl = function disableTetheringControl() {
    setTetheringControl("2")
 }
 
-export function enableTetheringControl() {
+exports.enableTetheringControl = function enableTetheringControl() {
    setTetheringControl("1")
 }
 
@@ -24,11 +24,11 @@ function setTetheringControl(value) {
 }
 
 
-function buildParamXML(param, value) {
+exports.buildParamXML = function buildParamXML(param, value) {
     return '<parm name="' + param + '" value="' + value + '"/>';
 }
 
-function buildCharacteristicXML(type, enclosedXML) {
+exports.buildCharacteristicXML = function buildCharacteristicXML(type, enclosedXML) {
     return '<characteristic type="' + type + '">' + enclosedXML + '</characteristic>';
 }
 
