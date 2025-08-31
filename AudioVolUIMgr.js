@@ -1,46 +1,13 @@
 #!/usr/bin/env js
 
-/*
-  // stop mute and vibrate mode
-  <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="MuteVibrateState" value="3" />
-  </characteristic>
-
-  // prevent mute selection by user
-  <characteristic version="10.2" type="AudioVolUIMgr">
-	<parm name="MuteVibrateUsage" value="2" />
-  </characteristic>
-
-  <characteristic version="10.2" type="AudioVolUIMgr">
-	<parm name="VibrateIconUsage" value="2" />
-  </characteristic>
-
-  // remove old profiles
-  <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="UIProfileAction" value="2" />
-    <characteristic type="UIProfile">
-      <parm name="ProfileName" value="Bagmanager_No_Scan_Beep" />
-    </characteristic>
-  </characteristic>
-
-  <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="UIProfileAction" value="2" />
-    <characteristic type="UIProfile">
-      <parm name="ProfileName" value="Bagmanager" />
-    </characteristic>
-  </characteristic>
-
-  <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="UIProfileAction" value="2" />
-    <characteristic type="UIProfile">
-      <parm name="ProfileName" value="StaffComm_Sound_Profile" />
-    </characteristic>
-  </characteristic>
-*/
-
 var mx=importModule('zebraMX');
 
+var extralog = false
 const mgr = 'AudioVolUIMgr';
+
+exports.extraLog = function extraLog() {
+    extralog = true;
+}
 
 exports.createProfile = function createSoundProfile(profileName, {musicLvl=null, ringLvl=null, notifLvl=null, sysLvl=null, alarmLvl=null, callLvl=null, vvsLvl=null}) {
     var params = '';
@@ -69,38 +36,28 @@ exports.createProfile = function createSoundProfile(profileName, {musicLvl=null,
     var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("UIProfileAction", "1") + mx.buildCharacteristicXML("UIProfile",
         mx.buildParamXML("ProfileName", profileName) + mx.buildCharacteristicXML("UIProfile-streamconfig", params)));
 
-    var response = sendCommand(command);
+    var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
         throw response["characteristic-error"].@desc;
     }
 }
 
 exports.setCurrentProfile = function setCurrentProfile(profileName) {
-/*  <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="CurrentProfileAction" value="1" />
-    <characteristic type="CurrentUIProfile">
-      <parm name="CurrentProfileName" value="GroundServices" />
-      <parm name="SetCurrentProfileOption" value="2" />
-    </characteristic>
-  </characteristic>
+/*  set previously created profile as current.
 */
     command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("CurrentProfileAction", "1") + mx.buildCharacteristicXML("CurrentUIProfile",
         mx.buildParamXML("CurrentProfileName", profileName) + mx.buildParamXML("SetCurrentProfileOption", "2")));
 
-    var response = sendCommand(command);
+    var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
         throw response["characteristic-error"].@desc;
     }
 }
 
 exports.deleteProfile = function deleteProfile(profileName, resetToDefault=False) {
-/*  // remove old profiles
-  <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="UIProfileAction" value="2" />
-    <characteristic type="UIProfile">
-      <parm name="ProfileName" value="Bagmanager_No_Scan_Beep" />
-    </characteristic>
-  </characteristic>
+/*
+    remove old profiles.
+    Note does not work if profile is set as current. Use resetToDefault=true
 */
     if (resetToDefault) {
         exports.setFactoryDefaultProfile();
@@ -109,7 +66,7 @@ exports.deleteProfile = function deleteProfile(profileName, resetToDefault=False
     var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("UIProfileAction", "2") + mx.buildCharacteristicXML("UIProfile",
         mx.buildParamXML("ProfileName", profileName)));
 
-    var response = sendCommand(command);
+    var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
         throw response["characteristic-error"].@desc;
     }
@@ -119,7 +76,7 @@ exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() {
 /* set sound levels back to whatever was declared in the current profile */
     command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("setCurrentProfile", "2"));
 
-    var response = sendCommand(command);
+    var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
         throw response["characteristic-error"].@desc;
     }
@@ -129,22 +86,46 @@ exports.setFactoryDefaultProfile = function setFactoryDefaultProfile() {
 /* reset current profile to factory default */
     command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("setCurrentProfile", "3"));
 
-    var response = sendCommand(command);
+    var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
         throw response["characteristic-error"].@desc;
     }
 }
 
-exports.preventMute = function preventMute() {
+exports.soundOn = function soundOn() {
+/*
+  MX 4.4 switch mute off, switching sound on. Sound level remains unchanged
+*/
+    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("MuteVibrateUsage", "3"));
+
+    var response = mx.sendCommand(command);
+    if (response.hasOwnProperty("characteristic-error")) {
+        throw response["characteristic-error"].@desc;
+    }
+}
+
+exports.muteOn = function muteOn() {
+/*
+  MX 4.4 switch mute on.
+*/
+    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("MuteVibrateUsage", "1"));
+
+    var response = mx.sendCommand(command);
+    if (response.hasOwnProperty("characteristic-error")) {
+        throw response["characteristic-error"].@desc;
+    }
+}
+
+exports.disableMute = function disableMute() {
 /*
   <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="MuteVibrateState" value="3" />
+    <parm name="MuteVibrateState" value="0" />
   </characteristic>
 
 */
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("MuteVibrateState", "3"));
+    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("MuteVibrateState", "0"));
 
-    var response = sendCommand(command);
+    var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
         throw response["characteristic-error"].@desc;
     }

@@ -6,24 +6,6 @@ exports.version = function getMxVersion() {
    return response..parm.@value;
 }
 
-exports.disableTetheringControl = function disableTetheringControl() {
-   setTetheringControl("2")
-}
-
-exports.enableTetheringControl = function enableTetheringControl() {
-   setTetheringControl("1")
-}
-
-function setTetheringControl(value) {
-    var command = '<parm name="TetheringandPortableHotspot" value="' + value + '"/>';
-
-    var response = sendCommand(command, "SettingsMgr");
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
-}
-
-
 exports.buildParamXML = function buildParamXML(param, value) {
     return '<parm name="' + param + '" value="' + value + '"/>';
 }
