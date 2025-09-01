@@ -1,6 +1,6 @@
 #!/usr/bin/env js
 
-var mx=importModule('zebraMX/zebraMX');
+var mx = require('zebraMx/zebraMx.js');
 const mgr = 'SettingsMgr';
 
 exports.disableTetheringControl = function disableTetheringControl() {
@@ -12,7 +12,7 @@ exports.enableTetheringControl = function enableTetheringControl() {
 }
 
 function setTetheringControl(value) {
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("TetheringandPortableHotspot", value));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("TetheringandPortableHotspot", value));
 
     var response = mx.sendCommand(c);
     if (response.hasOwnProperty("characteristic-error")) {
@@ -29,7 +29,7 @@ exports.enableFlightMode = function enableFlightMode() {
 }
 
 function setFlightMode(value) {
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("AirplaneMode", value));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("AirplaneMode", value));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {

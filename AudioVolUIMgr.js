@@ -1,6 +1,6 @@
 #!/usr/bin/env js
 
-var mx=importModule('zebraMX');
+var mx=require('zebraMx/zebraMx.js');
 
 var extralog = false
 const mgr = 'AudioVolUIMgr';
@@ -45,8 +45,8 @@ exports.createProfile = function createSoundProfile(profileName, {musicLvl=null,
 exports.setCurrentProfile = function setCurrentProfile(profileName) {
 /*  set previously created profile as current.
 */
-    command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("CurrentProfileAction", "1") + mx.buildCharacteristicXML("CurrentUIProfile",
-        mx.buildParamXML("CurrentProfileName", profileName) + mx.buildParamXML("SetCurrentProfileOption", "2")));
+    var command = mx.buildCharacteristic(mgr, mx.buildParamXML("CurrentProfileAction", "1") + mx.buildCharacteristic("CurrentUIProfile",
+        mx.buildParam("CurrentProfileName", profileName) + mx.buildParam("SetCurrentProfileOption", "2")));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
@@ -63,8 +63,8 @@ exports.deleteProfile = function deleteProfile(profileName, resetToDefault=False
         exports.setFactoryDefaultProfile();
     }
 
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("UIProfileAction", "2") + mx.buildCharacteristicXML("UIProfile",
-        mx.buildParamXML("ProfileName", profileName)));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("UIProfileAction", "2") + mx.buildCharacteristic("UIProfile",
+        mx.buildParam("ProfileName", profileName)));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
@@ -74,7 +74,7 @@ exports.deleteProfile = function deleteProfile(profileName, resetToDefault=False
 
 exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() {
 /* set sound levels back to whatever was declared in the current profile */
-    command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("setCurrentProfile", "2"));
+    command = mx.buildCharacteristic(mgr, mx.buildParam("setCurrentProfile", "2"));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
@@ -84,7 +84,7 @@ exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() {
 
 exports.setFactoryDefaultProfile = function setFactoryDefaultProfile() {
 /* reset current profile to factory default */
-    command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("setCurrentProfile", "3"));
+    command = mx.buildCharacteristic(mgr, mx.buildParam("setCurrentProfile", "3"));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
@@ -96,7 +96,7 @@ exports.soundOn = function soundOn() {
 /*
   MX 4.4 switch mute off, switching sound on. Sound level remains unchanged
 */
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("MuteVibrateUsage", "3"));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateUsage", "3"));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
@@ -108,7 +108,7 @@ exports.muteOn = function muteOn() {
 /*
   MX 4.4 switch mute on.
 */
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("MuteVibrateUsage", "1"));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateUsage", "1"));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {
@@ -123,7 +123,7 @@ exports.disableMute = function disableMute() {
   </characteristic>
 
 */
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("MuteVibrateState", "0"));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateState", "0"));
 
     var response = mx.sendCommand(command);
     if (response.hasOwnProperty("characteristic-error")) {

@@ -1,6 +1,6 @@
 #!/usr/bin/env js
 
-var mx=importModule('zebraMX/zebraMX.js');
+var mx = require('zebraMX/zebraMX.js');
 const mgr = 'DisplayMgr';
 
 exports.setDisplayTimeout = function setDisplayTimeout(timeoutSeconds) {
@@ -26,7 +26,6 @@ exports.setBrightnessLevel = function setBrightnessLevel(level) {
 
 exports.enableAutoBrightness = function enableAutoBrightness() {
 // MX 10.2
-
     var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("AdaptiveBrightness", "1"));
 
     var response = mx.sendCommand(command);

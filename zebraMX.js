@@ -1,25 +1,34 @@
 #!/usr/bin/env js
 
+const debug = true;
+
+var mxVersion = null;
 exports.version = function getMxVersion() {
-   var versionQuery = '<parm-query name="Version"/>';
-   var response = sendCommand(versionQuery, "MX");
-   return response..parm.@value;
+	if (mxVersion == null)
+	{
+		var versionQuery = exports.buildCharacteristic("MX", '<parm-query name="Version" />');
+		var response = exports.sendCommand(versionQuery);
+		mxVersion = response..parm.@value;
+	}
+	return mxVersion;
 }
 
-exports.buildParamXML = function buildParamXML(param, value) {
-    return '<parm name="' + param + '" value="' + value + '"/>';
+exports.buildParam = function buildParam(param, value) {
+    return '<parm name="' + param + '" value="' + value + '" />';
 }
 
-exports.buildCharacteristicXML = function buildCharacteristicXML(type, enclosedXML) {
+exports.buildCharacteristic = function buildCharacteristic(type, enclosedXML) {
     return '<characteristic type="' + type + '">' + enclosedXML + '</characteristic>';
 }
 
-function sendCommand(command, mgr = null) {
+exports.sendCommand = function sendCommand(command, mgr = null) {
     if (mgr) {
         command = '<characteristic type="' + mgr + '">' + command + '</characteristic>';
     }
     if (!command.startsWith('<wap-provisioningdoc>')) {
         command = '<wap-provisioningdoc>' + command + '</wap-provisioningdoc>';
     }
+    if (debug)
+		  mobicontrol.log.info("command: " + command);
     return new XML(mobicontrol.mdm.configure(command));
 }
