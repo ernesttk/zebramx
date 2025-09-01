@@ -1,6 +1,6 @@
 #!/usr/bin/env js
 
-var mx=importModule('zebraMX/zebraMX');
+var mx=importModule('zebraMX/zebraMX.js');
 const mgr = 'DisplayMgr';
 
 exports.setDisplayTimeout = function setDisplayTimeout(timeoutSeconds) {
