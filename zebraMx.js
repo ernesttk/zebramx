@@ -21,10 +21,7 @@ exports.buildCharacteristic = function buildCharacteristic(type, enclosedXML) {
     return '<characteristic type="' + type + '">' + enclosedXML + '</characteristic>';
 }
 
-exports.sendCommand = function sendCommand(command, mgr = null) {
-    if (mgr) {
-        command = '<characteristic type="' + mgr + '">' + command + '</characteristic>';
-    }
+exports.sendCommand = function sendCommand(command, debug = false) {
     if (!command.startsWith('<wap-provisioningdoc>')) {
         command = '<wap-provisioningdoc>' + command + '</wap-provisioningdoc>';
     }
