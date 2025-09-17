@@ -1,6 +1,8 @@
 #!/usr/bin/env js
 
-var mx = require('zebraMX/zebraMX.js');
+// doc: https://techdocs.zebra.com/mx/displaymgr/
+
+var mx = require('js/zebraMx/zebraMx.js');
 const mgr = 'DisplayMgr';
 
 exports.setDisplayTimeout = function setDisplayTimeout(timeoutSeconds) {
