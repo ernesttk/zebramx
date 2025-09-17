@@ -1,6 +1,6 @@
 #!/usr/bin/env js
 
-var audiomgr=require('AudioVolUIMgr/AudioVolUIMgr.js');
+var audiomgr=require('js/audioVolUIMgr/audioVolUIMgr.js');
 
 // var profileName = "GroundServices";
 var profileName = "Ernest";

@@ -1,6 +1,6 @@
 #!/usr/bin/env js
 
-var mx=require('zebraMx/zebraMx.js');
+var mx=require('js/zebraMx/zebraMx.js');
 
 var extralog = false
 const mgr = 'AudioVolUIMgr';
@@ -37,9 +37,7 @@ exports.createProfile = function createSoundProfile(profileName, {musicLvl=null,
         mx.buildParamXML("ProfileName", profileName) + mx.buildCharacteristicXML("UIProfile-streamconfig", params)));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.setCurrentProfile = function setCurrentProfile(profileName) {
@@ -49,9 +47,7 @@ exports.setCurrentProfile = function setCurrentProfile(profileName) {
         mx.buildParam("CurrentProfileName", profileName) + mx.buildParam("SetCurrentProfileOption", "2")));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.deleteProfile = function deleteProfile(profileName, resetToDefault=False) {
@@ -67,9 +63,7 @@ exports.deleteProfile = function deleteProfile(profileName, resetToDefault=False
         mx.buildParam("ProfileName", profileName)));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() {
@@ -77,9 +71,7 @@ exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() {
     command = mx.buildCharacteristic(mgr, mx.buildParam("setCurrentProfile", "2"));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.setFactoryDefaultProfile = function setFactoryDefaultProfile() {
@@ -87,9 +79,7 @@ exports.setFactoryDefaultProfile = function setFactoryDefaultProfile() {
     command = mx.buildCharacteristic(mgr, mx.buildParam("setCurrentProfile", "3"));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.soundOn = function soundOn() {
@@ -99,9 +89,7 @@ exports.soundOn = function soundOn() {
     var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateUsage", "3"));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.muteOn = function muteOn() {
@@ -111,9 +99,7 @@ exports.muteOn = function muteOn() {
     var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateUsage", "1"));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.disableMute = function disableMute() {
