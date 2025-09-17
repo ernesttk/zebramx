@@ -37,10 +37,10 @@ exports.enableAutoBrightness = function enableAutoBrightness() {
 }
 
 exports.enableAutorotate = function enableAutorotate() {
-    setAutorotate("1");
+    setAutorotate("Turn On");
 }
 exports.disableAutorotate = function disableAutorotate() {
-    setAutorotate("2");
+    setAutorotate("Turn Off");
 }
 
 function setAutorotate(value) {
