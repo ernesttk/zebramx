@@ -102,17 +102,22 @@ exports.muteOn = function muteOn() {
     mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.disableMute = function disableMute() {
-/*
-  <characteristic version="10.2" type="AudioVolUIMgr">
-    <parm name="MuteVibrateState" value="0" />
-  </characteristic>
+exports.soundOn = function soundOn(){
+    flipMuteSwitch("3");
+}
 
-*/
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateState", "0"));
+exports.muteOn = function muteOn(){
+    flipMuteSwitch("1");
+}
+
+exports.vibrateOn = function vibrateOn(){
+    flipMuteSwitch("2");
+}
+
+function flipMuteSwitch(value) {
+// MX 4.4 
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateState", value));
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    mobicontrol.log.debug("Response : " + response.toString());
 }
