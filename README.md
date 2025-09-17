@@ -1,9 +1,18 @@
 Repository with simple javascript meant to be used within mobicontrol managed devices from Zebra.
 
-Before a module can be used, it needs to be downloaded to the %scripts% folder of the agent using a file sync rule. It is recommended to create a sub-folder for each module.
+Before a module can be used, it needs to be downloaded to the %scripts%/js/ folder of the agent using a file sync rule. It is recommended to create a extra sub-folder for each module.
 
-These are the steps to install zebramx.js:
+These are the steps to install:
 
-    On the server, create a folder for syncing scripts, for example C:\scripts. This step can be skipped if the script syncing folder already exists.
-    Create a fraction subfolder and copy zebramx.js into it.
-    Create a file sync rule to download files from the server's C:\scripts folder to the device's %scripts% folder (including sub-folders) and assign the rule.
+    On the server, create a folder for syncing scripts, for example "scripts/".
+    Create a zebraMx subfolder and copy zebraMx.js into it. Similarely create as many folders as modules that must be included.
+    Create a file sync rule:
+    - download files from the server to the device
+    - origin:  "scripts/" folder
+    - destination: %scripts%/js folder.
+    - including sub-folders
+    - optionaly, set up to delete on device all files not present in the source folder, this makes clean up very easy.
+    - optionaly, sync as soon as possible when a device is discovered to allow these script modules to be used during staging.
+    Assign the rule to the devices who need them
+
+The %script% folder is where Mobicontrol places all the scripts which run on device. By adding the js/ folder we don't interfere with them.
