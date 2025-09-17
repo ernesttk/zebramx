@@ -50,7 +50,7 @@ exports.setCurrentProfile = function setCurrentProfile(profileName) {
     mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.deleteProfile = function deleteProfile(profileName, resetToDefault=False) {
+exports.deleteProfile = function deleteProfile(profileName, resetToDefault=false) {
 /*
     remove old profiles.
     Note does not work if profile is set as current. Use resetToDefault=true
