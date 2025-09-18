@@ -52,9 +52,9 @@ exports.setCurrentProfile = function setCurrentProfile(profileName) {
 
 exports.deleteProfile = function deleteProfile(profileName, resetToDefault=false) {
 /*
-    remove old profiles.
-    Note does not work if profile is set as current. Use resetToDefault=true
-*/
+ *  remove old profiles.
+ *  Note does not work if profile is set as current. if usure use resetToDefault=true
+ */
     if (resetToDefault) {
         exports.setFactoryDefaultProfile();
     }
