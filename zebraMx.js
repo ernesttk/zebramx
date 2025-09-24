@@ -24,9 +24,6 @@ exports.buildCharacteristic = function buildCharacteristic(type, enclosedXML, mx
 	if (mxInputVersion !== undefined)
 	    xmlversion = ' version="'+ mxInputVersion +'"'
 
-	mobicontrol.log.info("xmlversion: " + xmlversion);
-	mobicontrol.log.info("xmltype: " + xmltype);
-
 	return '<characteristic' + xmlversion + xmltype + '>' + enclosedXML + '</characteristic>';
 }
 
