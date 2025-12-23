@@ -44,7 +44,7 @@ exports.sendCommand = function sendCommand(command) {
 	var response = new XML(mobicontrol.mdm.configure(command));
 	if (response.hasOwnProperty("characteristic-error")) {
 	    if (debug)
-		  	mobicontrol.log.error("response: " + response.toString());
+		  	mobicontrol.log.error("raw response: " + response.toString());
 
 		throw response["characteristic-error"].@desc;
 	}
