@@ -1,6 +1,7 @@
 Repository with simple javascript meant to be used within mobicontrol managed devices from Zebra.
 
-Before a module can be used, it needs to be downloaded to the %scripts%/js/ folder of the agent using a file sync rule. It is recommended to create a extra sub-folder for each module.
+Before a module can be used, it needs to be downloaded to the %scripts%/js/ folder of the agent using a file sync rule. 
+Each script expects a sub-folder for each module 
 
 These are the steps to install:
 
@@ -16,3 +17,12 @@ These are the steps to install:
     Assign the rule to the devices who need them
 
 The %script% folder is where Mobicontrol places all the scripts which run on device. By adding the js/ folder we don't interfere with them.
+
+Callings scripts should first assign the required modules to a variable. That looks like the call below.
+
+	var appMgr = require('js/appMgr/appMgr.js');
+
+when calling a function within the module, use for example:
+ 
+	appMgr.disableApplication('com.android.chrome');
+
