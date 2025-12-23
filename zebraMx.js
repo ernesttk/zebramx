@@ -1,8 +1,12 @@
 #!/usr/bin/env js
 
-// set to true to get debug info in the log
-const debug = true;
+var debug = false;
 var mxVersion = null;
+
+// caal this with 'true' to get debug info in the log
+exports.setExtraLog = function setExtraLog(value) {
+    debug = value;
+}
 
 exports.version = function getMxVersion() {
 	if (mxVersion == null)

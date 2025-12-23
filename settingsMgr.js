@@ -1,10 +1,20 @@
 #!/usr/bin/env js
 
+// doc: https://techdocs.zebra.com/mx/SettingsMgr/
+
 var mx = require('js/zebraMx/zebraMx.js');
 const mgr = 'SettingsMgr';
 
+var debug = false; 
+
+// set to true to get debug info in the log
+exports.setExtraLog = function setExtraLog(value = true) {
+	mx.setExtraLog (value);
+    debug = value;
+}
+
 /*
- * Disable tethering control. Actually make the choice disappear in the settings.
+ * Disable tethering control. Actually make the choice appear or disappear in the settings.
  */
 exports.disableTetheringControl = function disableTetheringControl() {
    setTetheringControl("2")
@@ -19,10 +29,13 @@ exports.enableTetheringControl = function enableTetheringControl() {
 }
 
 function setTetheringControl(value) {
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("TetheringandPortableHotspot", value));
-
+    const useMX = "8.1";
+	
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("TetheringandPortableHotspot", value), useMX);
     var response = mx.sendCommand(command);
-    mobicontrol.log.debug("Response : " + response.toString());
+
+    if (debug)
+		mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.disableFlightMode = function disableFlightMode() {
@@ -34,8 +47,10 @@ exports.enableFlightMode = function enableFlightMode() {
 }
 
 function setFlightMode(value) {
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("AirplaneMode", value));
+    const useMX = "4.3";
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("AirplaneMode", value), useMX);
 
     var response = mx.sendCommand(command);
-    mobicontrol.log.debug("Response : " + response.toString());
+	if (debug)
+		mobicontrol.log.debug("Response : " + response.toString());
 }
