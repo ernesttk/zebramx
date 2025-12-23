@@ -6,6 +6,8 @@ var mx=require('js/zebraMx/zebraMx.js');
 
 var extralog = false
 const mgr = 'AudioVolUIMgr';
+const enable = "1";
+const disable = "2";
 
 exports.setExtraLog = function setExtraLog(value = true) {
     mx.extralog(value)
@@ -90,29 +92,45 @@ exports.deleteProfile = function deleteProfile(profileName, resetToDefault=false
 		mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() {
+exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() 
+{
 /* set sound levels back to whatever was declared in the current profile */
-    command = mx.buildCharacteristic(mgr, mx.buildParam("setCurrentProfile", "2"));
+
+    const useMX = "4.4";
+    command = mx.buildCharacteristic(mgr, mx.buildParam("CurrentProfileAction", "2"), useMX);
 
     var response = mx.sendCommand(command);
-    mobicontrol.log.debug("Response : " + response.toString());
+	if (extralog)
+		mobicontrol.log.debug("Response : " + response.toString());
 }
 
 exports.setFactoryDefaultProfile = function setFactoryDefaultProfile() {
 /* reset current profile to factory default */
-    command = mx.buildCharacteristic(mgr, mx.buildParam("setCurrentProfile", "3"));
+
+    const useMX = "4.4";
+    command = mx.buildCharacteristic(mgr, mx.buildParam("CurrentProfileAction", "3"), useMX);
 
     var response = mx.sendCommand(command);
-    mobicontrol.log.debug("Response : " + response.toString());
+	if (extralog)
+		mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.soundOn = function soundOn() {
-    const useMX = "4.4";
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateUsage", "3"), useMX);
+exports.enableMuteVibrateSwitch = function enableMuteSwitch() {
+	setMuteVibrateSwitch(enable);
+}
+
+exports.disableMuteVibrateSwitch = function disableMuteSwitch() {
+	setMuteVibrateSwitch(disable);
+}
+
+function setMuteVibrateSwitch(value) {
+	
+    const useMX = "11.6";
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateUsage", value), useMX);
 
     var response = mx.sendCommand(command);
     if (extralog)
-		mobicontrol.log.debug("Response : " + response.toString());
+		mobicontrol.log.debug("Raw response : " + response.toString());
 }
 
 exports.muteOn = function muteOn() {
