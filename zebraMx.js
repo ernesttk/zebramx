@@ -3,7 +3,7 @@
 var debug = false;
 var mxVersion = null;
 
-// caal this with 'true' to get debug info in the log
+// call this with 'true' to get debug info in the log
 exports.setExtraLog = function setExtraLog(value) {
     debug = value;
 }
@@ -13,6 +13,8 @@ exports.version = function getMxVersion() {
 	{
 		var versionQuery = exports.buildCharacteristic("MX", '<parm-query name="Version" />');
 		var response = exports.sendCommand(versionQuery);
+		if (debug)
+			mobicontrol.log.info('raw Mx version is ' + response);
 		mxVersion = response..parm.@value;
 	}
 	return mxVersion;
