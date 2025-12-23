@@ -2,10 +2,40 @@
 
 var debug = false;
 var mxVersion = null;
+var mxVersionMajor = 0;
+var mxVersionMinor = 0;
 
 // call this with 'true' to get debug info in the log
 exports.setExtraLog = function setExtraLog(value) {
     debug = value;
+}
+
+/*
+ * function to check if the installed MX version is larger than a given version
+ * input: string. version in the format major.minor version. If there is a smaller version nb it will be ignored.
+ * output: boolean. true is given version is smaller than current version
+ */
+exports.isInstalledMxVersionLarger = function isInstalledMxVersionLarger(inputVersion) 
+{
+	var equalOrLarger = false;
+	var inputMajor = 0;
+	var inputMinor = 0;
+
+	if (mxVersion == null)
+		exports.version();
+
+	var inputVersions = inputVersion.split(".");
+	if (inputVersions.length > 0)
+		inputMajor = parseInt(inputVersions[0]);
+	if (inputVersions.length > 1)
+		inputMinor = parseInt(inputVersions[1]);
+
+	if (mxVersionMajor > inputMajor)
+		equalOrLarger = true;
+	else if (mxVersionMajor == inputMajor && mxVersionMinor >= inputMinor)
+		equalOrLarger = true;
+
+	return equalOrLarger;
 }
 
 exports.version = function getMxVersion() {
@@ -16,6 +46,12 @@ exports.version = function getMxVersion() {
 		if (debug)
 			mobicontrol.log.info('raw Mx version is ' + response);
 		mxVersion = response..parm.@value;
+		
+		var versions = mxVersion.split(".");
+		mxVersionMajor = parseInt(versions[0]);
+		if (versions.length > 1)
+			mxVersionMinor = parseInt(versions[1]);
+
 	}
 	return mxVersion;
 }
