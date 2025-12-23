@@ -2,12 +2,20 @@
 
 // doc: https://techdocs.zebra.com/mx/WirelessMgr
 
-const debug = true;
+var mx = require('js/zebraMx/zebraMx.js');
+
 const enable = "1";
 const disable = "2";
 
-var mx = require('js/zebraMx/zebraMx.js');
 const mgr = 'WirelessMgr';
+
+var debug = false;
+
+// set to true to get debug info in the log
+exports.setExtraLog = function setExtraLog(value = true) {
+	mx.setExtraLog (value);
+    debug = value;
+}
 
 exports.disableBluetooth = function disableBluetooth() {
     modifyBluetooth(disable);
