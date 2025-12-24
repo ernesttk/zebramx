@@ -6,7 +6,7 @@ var mxVersionMajor = 0;
 var mxVersionMinor = 0;
 
 // call this with 'true' to get debug info in the log
-exports.setExtraLog = function setExtraLog(value) {
+exports.setExtraLog = function (value) {
     debug = value;
 }
 
@@ -15,14 +15,14 @@ exports.setExtraLog = function setExtraLog(value) {
  * input: string. version in the format major.minor version. If there is a smaller version nb it will be ignored.
  * output: boolean. true is given version is smaller than current version
  */
-exports.isInstalledMxVersionLarger = function isInstalledMxVersionLarger(inputVersion) 
+exports.isInstalledMxVersionLarger = function (inputVersion) 
 {
 	var equalOrLarger = false;
 	var inputMajor = 0;
 	var inputMinor = 0;
 
 	if (mxVersion == null)
-		exports.version();
+		getMxVersion();
 
 	var inputVersions = inputVersion.split(".");
 	if (inputVersions.length > 0)
@@ -38,11 +38,11 @@ exports.isInstalledMxVersionLarger = function isInstalledMxVersionLarger(inputVe
 	return equalOrLarger;
 }
 
-exports.version = function getMxVersion() {
+function getMxVersion() {
 	if (mxVersion == null)
 	{
-		var versionQuery = exports.buildCharacteristic("MX", '<parm-query name="Version" />');
-		var response = exports.sendCommand(versionQuery);
+		var versionQuery = buildCharacteristic("MX", '<parm-query name="Version" />');
+		var response = sendCommand(versionQuery);
 		if (debug)
 			mobicontrol.log.info('raw Mx version is ' + response);
 		mxVersion = response..parm.@value;
@@ -55,12 +55,14 @@ exports.version = function getMxVersion() {
 	}
 	return mxVersion;
 }
+exports.version = getMxVersion;
 
-exports.buildParam = function buildParam(param, value) {
+
+exports.buildParam = function (param, value) {
     return '<parm name="' + param + '" value="' + value + '" />';
 }
 
-exports.buildCharacteristic = function buildCharacteristic(type, enclosedXML, mxInputVersion) {
+function buildCharacteristic(type, enclosedXML, mxInputVersion) {
 	var xmlversion = '';
 	var xmltype = ' type="' + type + '"';
 	if (mxInputVersion !== undefined)
@@ -68,9 +70,10 @@ exports.buildCharacteristic = function buildCharacteristic(type, enclosedXML, mx
 
 	return '<characteristic' + xmlversion + xmltype + '>' + enclosedXML + '</characteristic>';
 }
+exports.buildCharacteristic = buildCharacteristic;
 
 // Send the command to the MX handler.
-exports.sendCommand = function sendCommand(command) {
+function sendCommand(command) {
     if (!command.startsWith('<wap-provisioningdoc>')) {
         command = '<wap-provisioningdoc>' + command + '</wap-provisioningdoc>';
     }
@@ -88,3 +91,4 @@ exports.sendCommand = function sendCommand(command) {
 	// return the XML. 
 	return response;
 }
+exports.sendCommand = sendCommand;
