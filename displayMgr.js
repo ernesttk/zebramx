@@ -7,61 +7,63 @@ const mgr = 'DisplayMgr';
 
 const enable = "1";
 const disable = "2";
-const debug = false;
+var debug = false;
 
-exports.setDisplayTimeout = function setDisplayTimeout(timeoutSeconds) {
+exports.setDisplayTimeout = function (timeoutSeconds) {
     const useMX = "4.3";
     // common values is 300 -> 5 minutes
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("TimeoutInterval", timeoutSeconds));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("TimeoutInterval", timeoutSeconds));
 
     var response = mx.sendCommand(command);
     if (debug)
         mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.setBrightnessLevel = function setBrightnessLevel(level) {
+exports.setBrightnessLevel = function (level) {
     const useMX = "10.2";
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("BrightnessLevel", level), useMX);
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("BrightnessLevel", level), useMX);
 
     var response = mx.sendCommand(command);
     if (debug)
         mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.enableAutoBrightness = function enableAutoBrightness() {
+exports.enableAutoBrightness = function () {
     const useMX = "10.2";
-    var command = mx.buildCharacteristicXML(mgr, mx.buildParamXML("AdaptiveBrightness", "1"), useMX);
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("AdaptiveBrightness", "1"), useMX);
 
     var response = mx.sendCommand(command);
     if (debug)
         mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.enableAutorotate = function enableAutorotate() {
+exports.enableAutorotate = function () {
     setAutorotate("Turn On");
 }
-exports.disableAutorotate = function disableAutorotate() {
+exports.disableAutorotate = function () {
     setAutorotate("Turn Off");
 }
 
 function setAutorotate(value) {
     const useMX = "10.1";
-    var command = mx.buildCharacteristic(mgr, mx.buildParamXML("AutoRotate", value), useMX);
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("AutoRotate", value), useMX);
 
     var response = mx.sendCommand(command);
     if (debug)
         mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.stayAwakeOnPower = function stayAwakeOnPower() {
+exports.stayAwakeOnPower = function () {
     stayAwake(enable);
 }
-exports.notStayAwake = function notStayAwake() {
+
+exports.allowSleepOnPower = function () {
     stayAwake(disable);
 }
+
 function stayAwake(value) {
     const useMX = "7.2";
-    var command = mx.buildCharacteristic(mgr, mx.buildParamXML("StayAwake", value), useMX);
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("StayAwake", value), useMX);
 
     var response = mx.sendCommand(command);
     if (debug)
