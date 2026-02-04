@@ -17,11 +17,11 @@ exports.setExtraLog = function setExtraLog(value = true) {
     debug = value;
 }
 
-exports.disableBluetooth = function disableBluetooth() {
+exports.disableBluetooth = function () {
     modifyBluetooth(disable);
 }
 
-exports.enableBluetooth = function enableBluetooth() {
+exports.enableBluetooth = function () {
     modifyBluetooth(enable);
 }
 
@@ -34,12 +34,12 @@ function modifyBluetooth(value) {
         mobicontrol.log.info("Response : " + response.toString());
 }
 
-exports.disableBluetoothState = function disableBluetoothState() {
+exports.disableBluetoothState = function () {
     modifyBluetoothState(disable);
 }
 
-exports.enableBluetoothState = function enableBluetoothState() {
-    dataBluetoothState(enable);
+exports.enableBluetoothState = function () {
+    modifyBluetoothState(enable);
 }
 
 function modifyBluetoothState(value) {
