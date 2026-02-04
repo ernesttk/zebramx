@@ -4,80 +4,80 @@
 
 var mx = require('js/zebraMx/zebraMx.js');
 const mgr = 'CellularMgr';
+const enable = "1";
+const disable = "2";
+const TurnOn = enable;
+const TurnOff = disable;
+const debug = true; // set to true to get debug info in the log
 
 exports.disableDataRoaming = function disableDataRoaming() {
-    dataRoamingState("Disable");
+    dataRoamingState(disable);
 }
 
 exports.enableDataRoaming = function enableDataRoaming() {
-    dataRoamingState("Enable");
+    dataRoamingState(enable);
 }
 
 function dataRoamingState(value) {
-// MX 6.3
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("DataRoamingState", value));
+    const useMX = 6.3;
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("DataRoamingState", value), useMX);
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    if (debug)
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 
 exports.lockCellularDataUsage = function lockCellularDataUsage() {
-    lockUnlockCellularData("2");
+    lockUnlockCellularData(disable);
 }
 
 exports.unlockCellularDataUsage = function unlockCellularDataUsage() {
-    lockUnlockCellularData("1");
+    lockUnlockCellularData(enable);
 }
 
 function lockUnlockCellularData(value) {
-// MX 6.3
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("CellularDataUsage", value));
+    const useMX = 4.3;
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("CellularDataUsage", value), useMX);
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    if (debug)
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.enableCellularData = function enableCellularData() {
-    flipCellularData("Turn On");
+    flipCellularData(TurnOn);
 }
 
 exports.disableCellularData = function disableCellularData() {
-    flipCellularData("Turn Off");
+    flipCellularData(TurnOff);
 }
 
 function flipCellularData(value) {
-// MX 6.3
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("CellularDataState", value));
+    const useMX = 6.3;
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("CellularDataState", value), useMX);
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    if (debug)
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.delESimProfile = function delESimProfile (profileName) {
-// mx 10.3
+    const useMX = 10.3;
     var command = mx.buildParam("eSIMFeatures", "true") + 
-        mx.buildCharacteristic("esim-feature", mx.buildParam("eSimProfile", "3") + mx.buildParam("ProfileNickname", profileName);
+        mx.buildCharacteristic("esim-feature", mx.buildParam("eSimProfile", "3") + mx.buildParam("ProfileNickname", profileName), useMX);
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    if (debug)
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.addESimProfile = function addESimProfile (profileName, activationcode) {
-// mx 10.3
+    const useMX = 10.3;
     var command = mx.buildParam("eSIMFeatures", "true") + 
-        mx.buildCharacteristic("esim-feature", mx.buildParam("eSimProfile", "3") + mx.buildParam("ProfileNickname", profileName);
+        mx.buildCharacteristic("esim-feature", mx.buildParam("eSimProfile", "3") + mx.buildParam("ProfileNickname", profileName), useMX);
 
     var response = mx.sendCommand(command);
-    if (response.hasOwnProperty("characteristic-error")) {
-        throw response["characteristic-error"].@desc;
-    }
+    if (debug)
+        mobicontrol.log.info("Response : " + response.toString());
 }
