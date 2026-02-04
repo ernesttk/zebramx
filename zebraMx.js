@@ -57,6 +57,12 @@ function getMxVersion() {
 }
 exports.version = getMxVersion;
 
+exports.sendQuery =function sendQuery(queryCommand) {
+	var response = sendCommand(queryCommand);
+	if (debug)
+		mobicontrol.log.info('raw query response ' + response);
+	return response;	
+}
 
 exports.buildParam = function (param, value) {
     return '<parm name="' + param + '" value="' + value + '" />';
