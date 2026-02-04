@@ -15,8 +15,7 @@ exports.setExtraLog = function (value = true) {
     debug = value;
 }
 
-
-exports.loadConfiguration= function loadConfiguration(profileName) {
+exports.loadConfiguration = function (profileName) {
     const useMX = 10.1;
 
     var command = mx.buildCharacteristic(mgr, mx.buildParam("ConfigurationFile", profileName), useMX);
@@ -25,17 +24,17 @@ exports.loadConfiguration= function loadConfiguration(profileName) {
         mobicontrol.log.info("Response : " + response.toString());
 }
 
-exports.allowControlAPIs = function allowControlAPIs() {
+exports.allowControlAPIs = function () {
     // all apps can control DataWedge using intents
     controllingAPIs(unchecked);
 }
 
-exports.disableControlAPIs = function disableControlAPIs() {
+exports.disableControlAPIs = function () {
     // only whitelisted apps (see accessmgr)can control DataWedge using intents
     controllingAPIs(checked);
 }
 
-controllingAPIs = function controllingAPIs(value) {
+function controllingAPIs(value) {
     const useMX = 10.1;
     var command = mx.buildCharacteristic(mgr, mx.buildParam("ControllingAPIs", value), useMX);
     var response = mx.sendCommand(command);
@@ -51,7 +50,8 @@ exports.disableManualDataWedge = function disableManualDataWedge() {
     ManualConfiguration(disable);
 }
 
-ManualConfiguration = function ManualConfiguration(value) {
+
+function ManualConfiguration(value) {
     const useMX = 9.2;
     var command = mx.buildCharacteristic(mgr, mx.buildParam("ManualConfiguration", value), useMX);
     var response = mx.sendCommand(command);
