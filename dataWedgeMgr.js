@@ -16,7 +16,7 @@ exports.setExtraLog = function (value = true) {
 }
 
 exports.loadConfiguration = function (profileName) {
-    const useMX = 10.1;
+    const useMX = "10.1";
 
     var command = mx.buildCharacteristic(mgr, mx.buildParam("ConfigurationFile", profileName), useMX);
     var response = mx.sendCommand(command);
@@ -35,7 +35,7 @@ exports.disableControlAPIs = function () {
 }
 
 function controllingAPIs(value) {
-    const useMX = 10.1;
+    const useMX = "10.1";
     var command = mx.buildCharacteristic(mgr, mx.buildParam("ControllingAPIs", value), useMX);
     var response = mx.sendCommand(command);
     if (debug)
@@ -52,7 +52,7 @@ exports.disableManualDataWedge = function disableManualDataWedge() {
 
 
 function ManualConfiguration(value) {
-    const useMX = 9.2;
+    const useMX = "9.2";
     var command = mx.buildCharacteristic(mgr, mx.buildParam("ManualConfiguration", value), useMX);
     var response = mx.sendCommand(command);
     if (debug)
