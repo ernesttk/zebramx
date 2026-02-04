@@ -8,7 +8,7 @@ const mgr = 'SettingsMgr';
 var debug = false; 
 
 // set to true to get debug info in the log
-exports.setExtraLog = function setExtraLog(value = true) {
+exports.setExtraLog = function (value = true) {
 	mx.setExtraLog (value);
     debug = value;
 }
@@ -16,7 +16,7 @@ exports.setExtraLog = function setExtraLog(value = true) {
 /*
  * Disable tethering control. Actually make the choice appear or disappear in the settings.
  */
-exports.disableTetheringControl = function disableTetheringControl() {
+exports.disableTetheringControl = function () {
    setTetheringControl("2")
 }
 
@@ -24,7 +24,7 @@ exports.disableTetheringControl = function disableTetheringControl() {
  * Enable tethering control. In effect make the selection visible in the settings.
  * In mobicontrol the agent can still prevent selecting it. 
  */
-exports.enableTetheringControl = function enableTetheringControl() {
+exports.enableTetheringControl = function () {
    setTetheringControl("1")
 }
 
@@ -38,11 +38,11 @@ function setTetheringControl(value) {
 		mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.disableFlightMode = function disableFlightMode() {
+exports.disableFlightMode = function () {
    setFlightMode("2")
 }
 
-exports.enableFlightMode = function enableFlightMode() {
+exports.enableFlightMode = function () {
    setFlightMode("1")
 }
 
