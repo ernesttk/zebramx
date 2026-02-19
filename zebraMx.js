@@ -64,9 +64,10 @@ exports.sendQuery = function (queryCommand) {
 	return response;
 }
 
-exports.buildParam = function (param, value) {
+function buildParam (param, value) {
     return '<parm name="' + param + '" value="' + value + '" />';
 }
+exports.buildParam = buildParam;
 
 function buildCharacteristic(type, enclosedXML, mxInputVersion) {
 	var xmlversion = '';
@@ -98,3 +99,12 @@ function sendCommand(command) {
 	return response;
 }
 exports.sendCommand = sendCommand;
+
+function simpleMXMessage (mgr, param, mxValue, value) {
+	const useMX = mxValue;
+	var command = buildCharacteristic(mgr, buildParam(param, value), useMX);
+	var response = sendCommand(command);
+	if (debug)
+		mobicontrol.log.debug("Response : " + response.toString());
+}
+exports.simpleMXMessage = simpleMXMessage;
