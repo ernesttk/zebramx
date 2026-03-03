@@ -64,11 +64,12 @@ function setAutoCorrectUsage(value) {
         mobicontrol.log.debug("Response : " + response.toString());
 }
 
-
-
-
 exports.queryAllSettings = function () {
-// After android 11 this call will be very limited in what it returns due to stupid android restrictions.
+    // With android 11 and above this call will return a Null pointer exception.
+    if (mobicontrol.os.apiLevel >= 30) {
+        mobicontrol.log.error("UiMgr.queryAllSettings is not supported on Android 11 and above.");
+        return;
+    }
     var command = '<characteristic-query type="UiMgr"/>';
     var response = mx.sendQuery(command);
     if (debug)

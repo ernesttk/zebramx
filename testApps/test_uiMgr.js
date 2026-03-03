@@ -1,3 +1,4 @@
+
 var uiMgr = require('js/uiMgr/uiMgr.js');
 
 uiMgr.setExtraLog(true);
@@ -8,4 +9,4 @@ uiMgr.setExtraLog(true);
 
 uiMgr.enableNetworkMonitorNotification();
 uiMgr.disableNetworkMonitorNotification();
-
+uiMgr.setInputMethod('com.symbol.mxmf.csp.enterprisekeyboard');
