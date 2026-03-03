@@ -10,7 +10,7 @@ const disable = "2";
 var debug = false;
 
 // set to true to get debug info in the log
-exports.setExtraLog = function (value = true) {
+exports.setExtraLog = function (value) {
     mx.setExtraLog (value);
     debug = value;
 }
@@ -88,6 +88,9 @@ function lockedOrientation(orientation) {
         mobicontrol.log.debug("Response : " + response.toString());
 }
 
+exports.stayAwakeOnPower = function () {
+    stayAwake(enable);
+}
 exports.allowSleepOnPower = function () {
     stayAwake(disable);
 }
