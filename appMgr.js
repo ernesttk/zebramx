@@ -3,7 +3,12 @@
 
 var mx = require('js/zebraMx/zebraMx.js');
 const mgr = 'AppMgr';
-const debug = true; // set to true to get debug info in the log
+
+var debug = false;
+exports.setExtraLog = function setExtraLog(value) {
+    debug = value;
+    mx.setExtraLog (value);
+}
 
 function isAppInstalled(appID) {
     // uses mobicontrol API to check if app is installed
