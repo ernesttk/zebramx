@@ -1,5 +1,3 @@
-#!/usr/bin/env js
-
 // doc: https://techdocs.zebra.com/mx/displaymgr/
 
 var mx = require('js/zebraMx/zebraMx.js');
@@ -15,6 +13,10 @@ exports.setExtraLog = function (value) {
     debug = value;
 }
 
+exports.setDisplayTimeoutMinutes = function (timeoutMinutes) {
+    exports.setDisplayTimeout(timeoutMinutes*60);
+}
+
 exports.setDisplayTimeout = function (timeoutSeconds) {
     const useMX = "4.3";
     // common values is 300 -> 5 minutes
@@ -22,7 +24,7 @@ exports.setDisplayTimeout = function (timeoutSeconds) {
 
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.setBrightnessLevel = function (level) {
@@ -31,7 +33,7 @@ exports.setBrightnessLevel = function (level) {
 
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.enableAutoBrightness = function () {
@@ -40,7 +42,7 @@ exports.enableAutoBrightness = function () {
 
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.enableAutorotate = function () {
@@ -56,7 +58,7 @@ function setAutorotate(value) {
 
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.forceToPortrait = function () {
@@ -85,7 +87,7 @@ function lockedOrientation(orientation) {
 
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.stayAwakeOnPower = function () {
@@ -101,5 +103,5 @@ function stayAwake(value) {
 
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
