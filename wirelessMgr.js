@@ -43,6 +43,7 @@ function BTScanningState(value) {
 /*
  * GPS functions
  */
+// enable/disable GPS on device
 exports.enableGPSState = function () {GPSState(enable);}
 exports.disableGPSState = function () {GPSState(disable);}
 
@@ -68,3 +69,27 @@ function GPSLocationMode(value) {
     mx.simpleMXMessage (mgr, "GPSLocationMode", value); 
 }
 
+
+/*
+ * NFC function
+ */
+
+// enable/disable NFC on device
+exports.enableNFCState = function () {NFCState(enable);}
+exports.disableNFCState = function () {NFCState(disable);}
+
+function NFCState(value) {
+    mx.simpleMXMessage (mgr, "NFCState", value); 
+}
+
+/*
+ * WiFi functions
+ */
+
+// enable/disable WiFi scanning. This is mostly good for in-bulding location determination
+exports.enableWiFiScanningState = function () {WiFiScanningState(enable);}
+exports.disableWiFiScanningState = function () {WiFiScanningState(disable);}
+
+function WiFiScanningState(value) {
+    mx.simpleMXMessage (mgr, "WiFiScanningState", value); 
+}

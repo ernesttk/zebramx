@@ -1,4 +1,3 @@
-#!/usr/bin/env js
 
 // doc: https://techdocs.zebra.com/mx/bluetoothmgr
 
@@ -7,15 +6,15 @@ const mgr = 'BluetoothMgr';
 var debug = false;
 
 
-exports.setExtraLog = function setExtraLog(value = true) {
-    debug
+exports.setExtraLog = function setExtraLog(value) {
+    debug = value;
     mx.setExtraLog (value);
 }
 
 exports.silentPairingProfile = function (deviceName, deviceAddress) {
-    const useMX = "10.3";
+    // const useMX = "10.3";
     
-    var SilentPairingDeviceDetails = mx.buildParam("SilentPairingDeviceDetails",
+    var SilentPairingDeviceDetails = mx.buildCharacteristic("SilentPairingDeviceDetails",
         mx.buildParam("SilentPairingName", deviceName) +
         mx.buildParam("SilentPairingUAP", deviceAddress)
     );
@@ -27,18 +26,15 @@ exports.silentPairingProfile = function (deviceName, deviceAddress) {
         mx.buildParam("IsTrustedDeviceRule", "1") +
         mx.buildParam("IsSilentPairingRule", "1");
         
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("SinglePairingProfile", pairing), useMX);
+    // var command = mx.buildCharacteristic(mgr, pairing, useMX);
+    var command = mx.buildCharacteristic(mgr, pairing);
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.clearSilentPairingList = function () {
-    const useMX = "7.0";
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("SilentPairingAction", "3"), useMX);
-    var response = mx.sendCommand(command);
-    if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+    mx.simpleMXMessage (mgr, "SilentPairingAction", "3");
 }
 
 exports.allowPairing = function () {
@@ -50,14 +46,11 @@ exports.disallowPairing = function () {
 }
 
 exports.allowTrustedOnlyPairing = function () {
-    allowDisallowPairing("3", "10.2");
+    allowDisallowPairing("3");
 }
 
-function allowDisallowPairing (value, useMX = "5.1") {
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("AllowPairing", value), useMX);
-    var response = mx.sendCommand(command); 
-    if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+function allowDisallowPairing (value) {
+    mx.simpleMXMessage (mgr, "AllowPairing", value);
 }
 
 exports.allowSilentPairing = function () {
@@ -69,9 +62,21 @@ exports.disallowSilentPairing = function () {
 }
 
 function allowDisallowSilentPairing (value) {
-    const useMX = "7.0"
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("AllowSilentPairing", value), useMX);
-    var response = mx.sendCommand(command); 
-    if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+    mx.simpleMXMessage (mgr, "AllowSilentPairing", value);
+}
+
+exports.clearAllDevicePairings = function () {
+    mx.simpleMXMessage (mgr, "PairedDeviceAction", "1");
+}
+
+exports.singlePairingOnly = function () {
+    singlePairing("1");
+}
+
+exports.allowMultiplePairings = function () {
+    singlePairing("2");
+}
+
+function singlePairing (value) {
+    mx.simpleMXMessage (mgr, "SinglePairing", value);
 }

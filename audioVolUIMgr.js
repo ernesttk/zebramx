@@ -1,5 +1,3 @@
-#!/usr/bin/env js
-
 // doc: https://techdocs.zebra.com/mx/AudioVolUIMgr/
 
 var mx=require('js/zebraMx/zebraMx.js');
@@ -9,7 +7,7 @@ const mgr = 'AudioVolUIMgr';
 const enable = "1";
 const disable = "2";
 
-exports.setExtraLog = function setExtraLog(value = true) {
+exports.setExtraLog = function setExtraLog(value) {
     mx.extralog(value)
 	extralog = value;
 }

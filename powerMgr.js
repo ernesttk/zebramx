@@ -1,5 +1,3 @@
-#!/usr/bin/env js
-
 // doc: https://techdocs.zebra.com/mx/powermgr/
 
 var mx = require('js/zebraMx/zebraMx.js');
@@ -38,7 +36,7 @@ exports.fullDeviceWipe = function () {
 
 exports.OSupgrade = function (OSfileName) {
 	// file : full path to the update zip file in string format (ie not an mobicontrol file object).
-	// Note zebra recommends placing file in '/data/tmp/public'. Following Android policy, his folder will remain accesible in the future.
+	// Note zebra recommends placing file in '/data/tmp/public'. Following Android policy, this folder will remain accesible in the future.
 	fileParams = mx.buildCharacteristic("file-details", mx.buildParam("ZipFile", OSfileName));
 
 	resetAction("10", "8.1", fileParams);
@@ -50,6 +48,7 @@ exports.OSDowngrade = function (OSfileName) {
 
 	resetAction("11", "10.1", fileParams);
 }
+
 exports.cancelOSUpgradeIfPossible = function () {
 	resetAction("14");
 }

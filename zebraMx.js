@@ -1,4 +1,3 @@
-#!/usr/bin/env js
 
 var debug = false;
 var mxVersion = null;
@@ -100,11 +99,12 @@ function sendCommand(command) {
 }
 exports.sendCommand = sendCommand;
 
-function simpleMXMessage (mgr, param, mxValue, value) {
+function simpleMXMessage (mgr, param, value, mxValue) {
+	// mxValue can also be 'undefiled', ie not provided.
 	const useMX = mxValue;
 	var command = buildCharacteristic(mgr, buildParam(param, value), useMX);
 	var response = sendCommand(command);
 	if (debug)
-		mobicontrol.log.debug("Response : " + response.toString());
+		mobicontrol.log.info("Response : " + response.toString());
 }
 exports.simpleMXMessage = simpleMXMessage;

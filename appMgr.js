@@ -26,7 +26,20 @@ function isAppInstalled(appID) {
     return returnValue;
 }
 
-exports.disableApplication = function disableApplication(appID) {
+exports.uninstallApplication = function (appID) {
+    const useMX = "4.2";
+    if (isAppInstalled(appID)) {
+        var command = mx.buildCharacteristic(mgr, mx.buildParam("Action", "Uninstall") + mx.buildParam("Package", appID), useMX);
+        var response = mx.sendCommand(command);
+        if (debug)
+            mobicontrol.log.info("Response : " + response.toString());
+    }
+    else {
+        mobicontrol.log.info(appID + ' is not installed.');
+    }
+}
+
+exports.disableApplication = function (appID) {
     const useMX = "4.2";
     if (isAppInstalled(appID)) {
         var command = mx.buildCharacteristic(mgr, mx.buildParam("Action", "DisableApplication") + mx.buildParam("Package", appID), useMX);
