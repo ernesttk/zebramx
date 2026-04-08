@@ -1,4 +1,3 @@
-#!/usr/bin/env js
 
 // doc: https://techdocs.zebra.com/mx/uimgr/
 
@@ -9,9 +8,16 @@ const enable = "1";
 const disable = "2";
 var debug = false;
 
-exports.setExtraLog = function setExtraLog (value) {
+exports.setExtraLog = function (value) {
     mx.setExtraLog (value)
     debug = value;
+}
+
+exports.showBatteryPercentage = function (){showHideBatteryPercentage(enable);}
+exports.hideBatteryPercentage = function (){showHideBatteryPercentage(disable);}
+function showHideBatteryPercentage(value)
+{
+    mx.simpleMXMessage (mgr, "ShowBatteryPercentage", value);
 }
 
 exports.setInputMethod = function (imePackage) {
@@ -28,24 +34,16 @@ exports.setInputMethod = function (imePackage) {
 
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.enableNetworkMonitorNotification = function () {
-    mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "10.1", "1");
+    mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "1", "10.1");
 //    setNetworkMonitorNotification("1");
 }
 
 exports.disableNetworkMonitorNotification = function () {
-    mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "10.1", "2");
-}
-
-function setNetworkMonitorNotification (value) {
-    const useMX = "10.1";
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("NetworkMonitorNotification", value), useMX);
-    var response = mx.sendCommand(command);
-    if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+    mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "2", "10.1");
 }
 
 exports.enableAutoCorrectUsage = function () {
@@ -61,8 +59,11 @@ function setAutoCorrectUsage(value) {
     var command = mx.buildCharacteristic(mgr, mx.buildParam("AutoCorrectUsage", value), useMX);
     var response = mx.sendCommand(command);
     if (debug)
-        mobicontrol.log.debug("Response : " + response.toString());
+        mobicontrol.log.info("Response : " + response.toString());
 }
+
+
+
 
 exports.queryAllSettings = function () {
     // With android 11 and above this call will return a Null pointer exception.

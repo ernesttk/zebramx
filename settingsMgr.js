@@ -1,4 +1,3 @@
-#!/usr/bin/env js
 
 // doc: https://techdocs.zebra.com/mx/SettingsMgr/
 
@@ -8,7 +7,7 @@ const mgr = 'SettingsMgr';
 var debug = false; 
 
 // set to true to get debug info in the log
-exports.setExtraLog = function (value = true) {
+exports.setExtraLog = function (value) {
 	mx.setExtraLog (value);
     debug = value;
 }
@@ -35,7 +34,7 @@ function setTetheringControl(value) {
     var response = mx.sendCommand(command);
 
     if (debug)
-		mobicontrol.log.debug("Response : " + response.toString());
+		mobicontrol.log.info("Response : " + response.toString());
 }
 
 exports.disableFlightMode = function () {
@@ -52,5 +51,5 @@ function setFlightMode(value) {
 
     var response = mx.sendCommand(command);
 	if (debug)
-		mobicontrol.log.debug("Response : " + response.toString());
+		mobicontrol.log.info("Response : " + response.toString());
 }

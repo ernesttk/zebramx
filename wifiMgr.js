@@ -1,4 +1,3 @@
-#!/usr/bin/env js
 
 // doc: https://techdocs.zebra.com/mx/wifi
 
@@ -9,7 +8,7 @@ const mgr = 'Wi-Fi';
 var debug = false;
 
 // set to true to get debug info in the log
-exports.setExtraLog = function setExtraLog(value = true) {
+exports.setExtraLog = function (value) {
 	mx.setExtraLog (value);
     debug = value;
 }
@@ -19,6 +18,17 @@ exports.removeSSID = function (SSID) {
     
     var networkAction = mx.buildCharacteristic("network-profile", mx.buildParam("SSID", SSID));
     var command = mx.buildCharacteristic(mgr, mx.buildParam("NetworkAction", "remove") + networkAction, useMX);
+
+    var response = mx.sendCommand(command);
+    if (debug)
+        mobicontrol.log.info("Response : " + response.toString());
+}
+
+exports.disableSSID = function (SSID) {
+    const useMX = "4.2";
+    
+    var networkAction = mx.buildCharacteristic("network-profile", mx.buildParam("SSID", SSID));
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("NetworkAction", "disable") + networkAction, useMX);
 
     var response = mx.sendCommand(command);
     if (debug)
@@ -35,4 +45,13 @@ exports.removeAllSSID = function () {
         mobicontrol.log.info("Response : " + response.toString());
 }
 
+exports.disableAllSSID = function () {
+    const useMX = "4.2";
+    
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("NetworkAction", "DisableAll"), useMX);
+
+    var response = mx.sendCommand(command);
+    if (debug)
+        mobicontrol.log.info("Response : " + response.toString());
+}
 
