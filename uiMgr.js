@@ -13,12 +13,18 @@ exports.setExtraLog = function (value) {
     debug = value;
 }
 
-exports.showBatteryPercentage = function (){showHideBatteryPercentage(enable);}
-exports.hideBatteryPercentage = function (){showHideBatteryPercentage(disable);}
-function showHideBatteryPercentage(value)
-{
-    mx.simpleMXMessage (mgr, "ShowBatteryPercentage", value);
-}
+exports.showBatteryPercentage = function (){ mx.simpleMXMessage (mgr, "ShowBatteryPercentage", enable); }
+exports.hideBatteryPercentage = function (){ mx.simpleMXMessage (mgr, "ShowBatteryPercentage", disable); }
+
+exports.enableClipBoardUsage = function () { mx.simpleMXMessage (mgr, "ClipBoardUsage", enable); }
+exports.disableClipBoardUsage = function () { mx.simpleMXMessage (mgr, "ClipBoardUsage", disable); }
+
+exports.setClipBoardClear = function () { mx.simpleMXMessage (mgr, "ClipBoardClear", true); }
+exports.resetClipBoardClear = function () { mx.simpleMXMessage (mgr, "ClipBoardClear", false); }
+
+exports.enableClipboardShare = function () { mx.simpleMXMessage (mgr, "ClipboardShare", enable); }
+exports.disableClipboardShare = function () { mx.simpleMXMessage (mgr, "ClipboardShare", disable); }
+
 
 exports.setInputMethod = function (imePackage) {
 // The only usage of this function I can think of is when enabling the Enterprise Keyboard from Zebra.
@@ -37,14 +43,8 @@ exports.setInputMethod = function (imePackage) {
         mobicontrol.log.info("Response : " + response.toString());
 }
 
-exports.enableNetworkMonitorNotification = function () {
-    mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "1", "10.1");
-//    setNetworkMonitorNotification("1");
-}
-
-exports.disableNetworkMonitorNotification = function () {
-    mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "2", "10.1");
-}
+exports.enableNetworkMonitorNotification = function () { mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "1"); }
+exports.disableNetworkMonitorNotification = function () { mx.simpleMXMessage(mgr, "NetworkMonitorNotification", "2"); }
 
 exports.enableAutoCorrectUsage = function () {
     setAutoCorrectUsage(enable);
@@ -63,8 +63,6 @@ function setAutoCorrectUsage(value) {
 }
 
 
-
-
 exports.queryAllSettings = function () {
     // With android 11 and above this call will return a Null pointer exception.
     if (mobicontrol.os.apiLevel >= 30) {
@@ -76,3 +74,7 @@ exports.queryAllSettings = function () {
     if (debug)
         mobicontrol.log.debug("Response : " + response.toString());
 }
+
+exports.enableLargeScreenTaskbarUsage = function () { mx.simpleMXMessage(mgr, "LargeScreenTaskbarUsage", enable); }
+exports.disableLargeScreenTaskbarUsage = function () { mx.simpleMXMessage(mgr, "LargeScreenTaskbarUsage", disable); }
+
