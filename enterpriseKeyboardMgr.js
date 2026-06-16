@@ -242,59 +242,17 @@ function enableDisableVoiceInputKey (value) {
     mx.simpleMXMessage(mgr, "VoiceInputKey", value, useMX);
 }
 
-exports.showScanTab = function () {
-        showHideScanTab(enable);
-}
-exports.hideScanTab = function () {
-        showHideScanTab(disable);
-}
+exports.showScanTab = function () { mx.simpleMXMessage(mgr, "ShowScanTab", enable); }
+exports.hideScanTab = function () { mx.simpleMXMessage(mgr, "ShowScanTab", disable); }
 
-function showHideScanTab (value) {
-    // value = enable "1" / disable "2"
-    const useMX = "6.0";
-    mx.simpleMXMessage(mgr, "ShowScanTab", value, useMX);
-}
+exports.showSymbolTab = function () { mx.simpleMXMessage(mgr, "ShowSymbolTab", enable); }
+exports.hideSymbolTab = function () { mx.simpleMXMessage(mgr, "ShowSymbolTab", disable); }
 
-exports.showSymbolTab = function (value) {
-    showHideSymbolTab (enable)
-}
-exports.hideSymbolTab = function (value) {
-    showHideSymbolTab (disable)
-}
+exports.hideVoiceTab = function () { mx.simpleMXMessage(mgr, "ShowVoiceTab", disable); }
+exports.showVoiceTab = function () { mx.simpleMXMessage(mgr, "ShowVoiceTab", enable); }
 
-function showHideSymbolTab (value) {
-    // value = enable "1" / disable "2"
-    const useMX = "7.1";
-    mx.simpleMXMessage(mgr, "ShowSymbolTab", value, useMX);
-}
-
-exports.hideVoiceTab = function () {
-    enableDisableVoiceTab(disable);
-}
-
-exports.showVoiceTab = function () {
-    enableDisableVoiceTab(enable);
-}
-
-function enableDisableVoiceTab (value) {
-    // value = enable "1" / disable "2"
-    const useMX = "7.1";
-    mx.simpleMXMessage(mgr, "ShowVoiceTab", value, useMX);
-}
-
-
-exports.showNumericTab = function () {
-    showHideNumericTab(enable);
-}
-exports.hideNumericTab = function () {
-    showHideNumericTab(disable);
-}
-
-function showHideNumericTab (value) {
-    // value = enable "1" / disable "2"
-    const useMX = "10.1";
-    mx.simpleMXMessage(mgr, "ShowNumericTab", value, useMX);
-}
+exports.showNumericTab = function () { mx.simpleMXMessage(mgr, "ShowNumericTab", enable); }
+exports.hideNumericTab = function () { mx.simpleMXMessage(mgr, "ShowNumericTab", disable); }
 
 exports.showAlphaNumericTab = function (value) {
     // value = enable "1" / disable "2"
