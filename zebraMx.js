@@ -100,7 +100,7 @@ function sendCommand(command) {
 exports.sendCommand = sendCommand;
 
 function simpleMXMessage (mgr, param, value, mxValue) {
-	// mxValue can also be 'undefiled', ie not provided.
+	// mxValue can also be 'undefined', ie not provided.
 	const useMX = mxValue;
 	var command = buildCharacteristic(mgr, buildParam(param, value), useMX);
 	var response = sendCommand(command);
