@@ -39,14 +39,14 @@ exports.OSupgrade = function (OSfileName) {
 	// Note zebra recommends placing file in '/data/tmp/public'. Following Android policy, this folder will remain accesible in the future.
 	fileParams = mx.buildCharacteristic("file-details", mx.buildParam("ZipFile", OSfileName));
 
-	resetAction("10", "8.1", fileParams);
+	resetAction("10", fileParams);
 }
 
 exports.OSDowngrade = function (OSfileName) {
 	// file : full path to the update zip file in string format (ie not an mobicontrol file object).
 	fileParams = mx.buildCharacteristic("file-details", mx.buildParam("ZipFile", OSfileName));
 
-	resetAction("11", "10.1", fileParams);
+	resetAction("11", fileParams);
 }
 
 exports.cancelOSUpgradeIfPossible = function () {
@@ -54,12 +54,12 @@ exports.cancelOSUpgradeIfPossible = function () {
 }
 
 exports.powerOff = function () {
-	resetAction("15", "13.1");
+	resetAction("15");
 	// there is no answer unless DSD is lower than 13.1.
 }
 
-function resetAction(value, useMX = "8.1", extraParams = '') {
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("ResetAction", value) + extraParams, useMX);
+function resetAction(value, extraParams = '') {
+    var command = mx.buildCharacteristic(mgr, mx.buildParam("ResetAction", value) + extraParams);
 
     var response = mx.sendCommand(command);
     if (debug)
