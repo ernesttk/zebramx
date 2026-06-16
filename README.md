@@ -26,3 +26,8 @@ when calling a function within the module, use for example:
  
 	appMgr.disableApplication('com.android.chrome');
 
+of course this can be shortened to to this strange looking one liner:
+
+    require('js/appMgr/appMgr.js').disableApplication('com.android.chrome');
+
+which is only faster when it is indeed a one line script.
