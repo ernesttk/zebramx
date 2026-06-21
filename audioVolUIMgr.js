@@ -12,7 +12,7 @@ exports.setExtraLog = function setExtraLog(value) {
 	extralog = value;
 }
 
-exports.createProfile = function createSoundProfile(profileName, {musicLvl=null, ringLvl=null, notifLvl=null, sysLvl=null, alarmLvl=null, callLvl=null, vvsLvl=null}) 
+exports.createProfile = function createSoundProfile(profileName, {musicLvl=null, ringLvl=null, notifLvl=null, sysLvl=null, alarmLvl=null, callLvl=null, vvsLvl=null})
 {
     const useMX = "4.4";
 
@@ -33,7 +33,7 @@ exports.createProfile = function createSoundProfile(profileName, {musicLvl=null,
         /* not supported but ignored above MX11 */
 		if (extralog)
 			mobicontrol.log.info(mgr + ": param sysLvl is ignored above MX11");
-		
+
         params += mx.buildParamXML("STREAM_SYSTEM_SPK_LEVEL",sysLvl);
     if (alarmLvl!=null)
         params += mx.buildParamXML("STREAM_ALARM_SPK_LEVEL",alarmLvl);
@@ -66,7 +66,7 @@ exports.setCurrentProfile = function setCurrentProfile(profileName) {
         mx.buildParam("CurrentProfileName", profileName) + mx.buildParam("SetCurrentProfileOption", "2")), useMX);
 
     var response = mx.sendCommand(command);
-	
+
     if (extralog)
 		mobicontrol.log.debug("Response : " + response.toString());
 }
@@ -90,7 +90,7 @@ exports.deleteProfile = function deleteProfile(profileName, resetToDefault=false
 		mobicontrol.log.debug("Response : " + response.toString());
 }
 
-exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels() 
+exports.setCurrentProfileSoundLevels = function setCurrentProfileSoundLevels()
 {
 /* set sound levels back to whatever was declared in the current profile */
 
@@ -122,7 +122,7 @@ exports.disableMuteVibrateSwitch = function disableMuteSwitch() {
 }
 
 function setMuteVibrateSwitch(value) {
-	
+
     const useMX = "11.6";
     var command = mx.buildCharacteristic(mgr, mx.buildParam("MuteVibrateUsage", value), useMX);
 
