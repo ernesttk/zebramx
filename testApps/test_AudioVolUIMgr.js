@@ -5,6 +5,8 @@ var audiomgr = require('js/audioVolUIMgr/audioVolUIMgr.js');
 // var profileName = "GroundServices";
 var profileName = "Ernest";
 
+audiomgr.setExtraLog(true);
+
 audiomgr.createSoundProfile(profileName, {musicLvl:"6,15,12", ringLvl:"3,7,6", notifLvl:"5,7,6", sysLvl:"5,7,6", alarmLvl:"5,7,6", callLvl:"3,5,4", vvsLvl:"7,10,8"});
 audiomgr.setCurrentProfile(profileName);
 audiomgr.setCurrentProfileSoundLevels();
