@@ -27,9 +27,8 @@ function isAppInstalled(appID) {
 }
 
 exports.uninstallApplication = function (appID) {
-    const useMX = "4.2";
     if (isAppInstalled(appID)) {
-        var command = mx.buildCharacteristic(mgr, mx.buildParam("Action", "Uninstall") + mx.buildParam("Package", appID), useMX);
+        var command = mx.buildCharacteristic(mgr, mx.buildParam("Action", "Uninstall") + mx.buildParam("Package", appID));
         var response = mx.sendCommand(command);
         if (debug)
             mobicontrol.log.info("Response : " + response.toString());
@@ -40,30 +39,55 @@ exports.uninstallApplication = function (appID) {
 }
 
 exports.disableApplication = function (appID) {
-    const useMX = "4.2";
-    if (isAppInstalled(appID)) {
-        var command = mx.buildCharacteristic(mgr, mx.buildParam("Action", "DisableApplication") + mx.buildParam("Package", appID), useMX);
-        try {
-			var response = mx.sendCommand(command);
-			if (debug)
-				mobicontrol.log.info("Response : " + response.toString());
-		} catch {
-			mobicontrol.log.warn(appID + ' was already disabled.');
-		}
+    try {
+        doAction (appID, "DisableApplication");
+    } catch (err) {
+        mobicontrol.log.info(appID + ' was already disabled. Message was: ' + err.message);
     }
 }
 
-exports.enableApplication = function enableApplication(appID) {
-    const useMX = "4.2";
-    if (isAppInstalled(appID)) {
-        var command = mx.buildCharacteristic(mgr, mx.buildParam("Action", "EnableApplication") + mx.buildParam("Package", appID), useMX);
-		try {
-			var response = mx.sendCommand(command); 
-			if (debug)
-				mobicontrol.log.info("Response : " + response.toString());
-		} catch {
-			mobicontrol.log.warn(appID + ' was already enabled.');
-		}
+exports.enableApplication = function (appID) {
+    try {
+        doAction (appID, "EnableApplication");
+    } catch (err) {
+		mobicontrol.log.info(appID + ' was already enabled. Message was: ' + err.message);
     }
 }
 
+exports.clearApplicationCache = function (appID) {
+    try {
+        doAction (appID, "ClearApplicationCache");
+    } catch (err) {
+        mobicontrol.log.warn(appID + ' clear failed. Message was: ' + err.message);
+    }
+}
+
+exports.clearApplicationUserData = function (appID) {
+    try {
+        doAction (appID, "ClearApplicationUserData");
+    } catch (err) {
+        mobicontrol.log.warn(appID + ' clear failed. Message was: ' + err.message);
+    }
+}
+
+exports.setDefaultLauncher = function (appID) {
+    try {
+        doAction (appID, "SetDefaultLauncher");
+    } catch (err) {
+        mobicontrol.log.warn('failed to set ' + appID + ' as default launcher. Message was: ' + err.message);
+    }
+}
+
+
+function doAction (appID, action) {
+    // this function throws an error in some case if the action was already done.
+    if (isAppInstalled(appID)) {
+        var command = mx.buildCharacteristic(mgr, mx.buildParam("Action", action) + mx.buildParam("Package", appID));
+        var response = mx.sendCommand(command);
+        if (debug)
+            mobicontrol.log.info("Response : " + response.toString());
+    }
+    else {
+        mobicontrol.log.info(appID + ' is not installed.');
+    }
+}
