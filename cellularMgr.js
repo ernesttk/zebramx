@@ -17,41 +17,20 @@ exports.setExtraLog = function (value) {
     mx.setExtraLog (value);
 }
 
-exports.disableDataRoaming = function () {dataRoamingState(disable);}
-exports.enableDataRoaming = function () {dataRoamingState(enable);}
+exports.disableDataRoaming = function () { mx.simpleMXMessage(mgr, "DataRoamingState", disable); }
+exports.enableDataRoaming = function () { mx.simpleMXMessage(mgr, "DataRoamingState", enable); }
 
-function dataRoamingState(value) {
-    const useMX = 6.3;
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("DataRoamingState", value), useMX);
+exports.lockCellularDataUsage = function () { mx.simpleMXMessage(mgr, "CellularDataUsage", disable); }
+exports.unlockCellularDataUsage = function () { mx.simpleMXMessage(mgr, "CellularDataUsage", enable); }
 
-    var response = mx.sendCommand(command);
-    if (debug)
-        mobicontrol.log.info("Response : " + response.toString());
-}
+exports.enableCellularData = function () { mx.simpleMXMessage(mgr, "CellularDataState", TurnOn); }
+exports.disableCellularData = function () { mx.simpleMXMessage(mgr, "CellularDataState", TurnOff); }
 
-exports.lockCellularDataUsage = function () {lockUnlockCellularData(disable);}
-exports.unlockCellularDataUsage = function () {lockUnlockCellularData(enable);}
+exports.lockBackgroundDataUsage = function () { mx.simpleMXMessage(mgr, "BackgroundDataUsage", enable); }
+exports.unlockBackgroundDataUsage = function () { mx.simpleMXMessage(mgr, "BackgroundDataUsage", disable); }
 
-function lockUnlockCellularData(value) {
-    const useMX = 4.3;
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("CellularDataUsage", value), useMX);
-
-    var response = mx.sendCommand(command);
-    if (debug)
-        mobicontrol.log.info("Response : " + response.toString());
-}
-
-exports.enableCellularData = function () {flipCellularData(TurnOn);}
-exports.disableCellularData = function () {flipCellularData(TurnOff);}
-
-function flipCellularData(value) {
-    const useMX = 6.3;
-    var command = mx.buildCharacteristic(mgr, mx.buildParam("CellularDataState", value), useMX);
-
-    var response = mx.sendCommand(command);
-    if (debug)
-        mobicontrol.log.info("Response : " + response.toString());
-}
+exports.enableBackgroundDataState = function () { mx.simpleMXMessage(mgr, "BackgroundDataState", enable); }
+exports.disableBackgroundDataState = function () { mx.simpleMXMessage(mgr, "BackgroundDataState", disable); }
 
 exports.delESimProfile = function delESimProfile (profileName) {
     const useMX = 10.3;
